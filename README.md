@@ -1,1 +1,1 @@
-# Praca_magisterka
+# Application of quantum computing to electronic structure calculation using Green’s function method
