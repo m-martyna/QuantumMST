@@ -19,7 +19,7 @@ def plot_potential(V, array_x):
 
     plt.show()
 
-def plot_eigen(s, tab_x, e1, e2, n, determinans = True, values = True):
+def plot_eigen(s, tab_x, e1, e2, n, det = True, values = True):
 
     energies = np.linspace(e1, e2, n)
     det_t = []
@@ -31,7 +31,7 @@ def plot_eigen(s, tab_x, e1, e2, n, determinans = True, values = True):
         if(values):plt.scatter(np.full(len(eigen_values), E), eigen_values, color = 'black', s = 2)
     if(values):plt.show()
 
-    if(determinans):plt.plot(energies, det_t, color = 'green')
+    if(det):plt.plot(energies, det_t, color = 'green')
     plt.axhline(y=0, color='black', linestyle='--')
     plt.xlabel('energy')
-    if(determinans):plt.show()
+    if(det):plt.show()

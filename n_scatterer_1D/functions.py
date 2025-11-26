@@ -45,16 +45,39 @@ def secular(scatterers, struct_const):
     E = struct_const.E
 
     for i in range(n):
-            secular_matrix[i, i] = scatterers[i].calc_m(E)
+        secular_matrix[i, i] = scatterers[i].calc_m(E)
 
     secular_matrix = secular_matrix.transpose(0, 2, 1, 3).reshape(2*n, 2*n)
 
     return np.real(np.linalg.det(secular_matrix)), np.real(np.linalg.eigvals(secular_matrix))
 
-def generate_scatteters(number, Vmin, Vmax, rmin, rmax):
-    s = [scatterer(random.uniform(rmin, rmax), random.uniform(Vmin, Vmax)) for _ in range(number)]
-    return s
+def random_x(n, a, b, min_dist):
+    x = []
+    while len(x) < n:
+        p = random.uniform(a, b)
+        if all(abs(p - i) >= min_dist for i in x):
+            x.append(p)
 
-def generate_positions(s, xmin, xmax):
-    x = [random.uniform(xmin, xmax) for i in range(len(s))]
-    return x
+    return np.sort(x)
+
+def generate_scatterer(number, min_dist_pot, rmin, rmax,  Vmin, Vmax, xmin, xmax):
+    s = []
+    x = random_x(number, xmin, xmax, 2*rmin+min_dist_pot)
+    r = 0
+
+    for i in range(number):
+        if(i==0): beg = xmin
+        else: beg = x[i-1] + r + min_dist_pot
+
+        if(i==len(x)-1): end = xmax
+        else: end = x[i+1] - min_dist_pot - rmin
+
+        dist = min(np.abs(x[i]-beg), np.abs(x[i]-end))
+
+        r = random.uniform(rmin, min(rmax, dist))
+        V = random.uniform(Vmin, Vmax)
+        s.append(scatterer(r, V))
+
+    return s, x
+
+        
