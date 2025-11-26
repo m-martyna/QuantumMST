@@ -43,8 +43,8 @@ psi_e2 = np.array([calc_psi(S2, x, components_e2) for x in array_x])
 import scipy.integrate 
 integral_e1 = scipy.integrate.simpson((np.abs(psi_e1)**2), x = array_x)
 integral_e2 = scipy.integrate.simpson((np.abs(psi_e2)**2), x = array_x)
-norm_psi_e1 = psi_e1/np.sqrt(integral_e1)
-norm_psi_e2 = psi_e2/np.sqrt(integral_e2)
+norm_psi_e1 = np.real(psi_e1/np.sqrt(integral_e1))
+norm_psi_e2 = np.real(psi_e2/np.sqrt(integral_e2))
 a = np.max(norm_psi_e1)*1.1
 
 plt.figure()
@@ -66,3 +66,4 @@ plt.title(f"E = {energies[1]}")
 plt.xlabel("x")
 plt.ylabel(f"$\Psi$")
 plt.savefig("2scatter_1D/plots/Psi2.png")
+plt.show()

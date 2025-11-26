@@ -36,6 +36,8 @@ class two_scatters:
 
         return np.array(V), array_x
 
+
+
 def gamma(E, V, r):
     if(E>V):
         k = np.sqrt(E-V)
