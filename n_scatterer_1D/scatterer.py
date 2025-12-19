@@ -49,6 +49,16 @@ class scatterer:
     def calc_gamma(self, E, l):
         R = calc_R(E, self.V, self.r, l, analitical = True)
         R_p = calc_Rderivative(E, self.V, self.r, l, analitical = True)
+        
+        # Safeguard against division by zero and 0/0
+        epsilon = 1e-14
+        if abs(R) < epsilon:
+            if abs(R_p) < epsilon:
+                if self.r != 0:
+                    return 1.0 / self.r
+                else:
+                    return 0.0
+                
         return R_p/R
     
     def calc_ml(self, E, l):        
