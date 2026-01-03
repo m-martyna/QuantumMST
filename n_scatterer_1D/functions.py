@@ -64,6 +64,8 @@ def secular(scatterers, struct_const, only_eigen_val = False):
 
     secular_matrix = secular_matrix.transpose(0, 2, 1, 3).reshape(2*n, 2*n)
     if(only_eigen_val): return np.real(np.linalg.eigvals(secular_matrix))
+    
+    np.savetxt('n_scatterer_1D/results/secular_matrix.txt', secular_matrix.view(float), delimiter='\t', fmt='%.6f')
     return np.real(np.linalg.det(secular_matrix)), np.real(np.linalg.eigvals(secular_matrix))
 
 def eigen_val(s, tab_x, e1, e2, n, plot_det = True, plot_values = True, save = True):
@@ -72,15 +74,15 @@ def eigen_val(s, tab_x, e1, e2, n, plot_det = True, plot_values = True, save = T
     det_t = []
     eigen_t = []
     with open('n_scatterer_1D/results/eigen_values.txt', 'w') as file:
-        start_time = time.perf_counter()
+        # start_time = time.perf_counter()
         for E in energies:
             str_constans = G_AB(energy = E , positions = tab_x)
             det, eigen_values = secular(s, str_constans)
             det_t.append(det)
             eigen_t.extend(np.sort(eigen_values))
             if(plot_values):plt.scatter(np.full(len(eigen_values), E), eigen_values, color = 'black', s = 2)
-        end_time = time.perf_counter()
-        print(f"time: {end_time-start_time:.6f} seconds")
+        # end_time = time.perf_counter()
+        # print(f"time: {end_time-start_time:.6f} seconds")
     if(plot_values):
         plt.axhline(y=0, color='red', linestyle='--')
         plt.show()
@@ -131,6 +133,13 @@ def generate_scatterer(number, min_dist_pot, rmin, rmax,  Vmin, Vmax, xmin, xmax
         data = np.column_stack((x, r_values, V_values))
         np.savetxt('n_scatterer_1D/results/random_scatterer.txt', data, delimiter='\t')
     return s, x
+
+def generate_even_scatterer(number):
+    dis = 3
+    x = np.arange(0, number)*dis
+    s = [scatterer(0.5, -5) for _ in range(number)]
+    return s, x
+
 
 def load_scatterer(filename):
     data = np.loadtxt(filename)
