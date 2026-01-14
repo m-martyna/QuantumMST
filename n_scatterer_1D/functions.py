@@ -65,8 +65,19 @@ def secular(scatterers, struct_const, only_eigen_val = False):
     secular_matrix = secular_matrix.transpose(0, 2, 1, 3).reshape(2*n, 2*n)
     if(only_eigen_val): return np.real(np.linalg.eigvals(secular_matrix))
     
-    np.savetxt('n_scatterer_1D/results/secular_matrix.txt', secular_matrix.view(float), delimiter='\t', fmt='%.6f')
     return np.real(np.linalg.det(secular_matrix)), np.real(np.linalg.eigvals(secular_matrix))
+
+def secular_matrix(scatterers, struct_const):
+    n = len(scatterers)
+    secular_matrix = -struct_const.matrix_g()
+    E = struct_const.E
+
+    for i in range(n):
+        secular_matrix[i, i] = scatterers[i].calc_m(E)
+
+    secular_matrix = secular_matrix.transpose(0, 2, 1, 3).reshape(2*n, 2*n)
+    np.savetxt('n_scatterer_1D/results/secular_matrix.txt', secular_matrix.view(float), delimiter='\t', fmt='%.6f')
+    return secular_matrix
 
 def eigen_val(s, tab_x, e1, e2, n, plot_det = True, plot_values = True, save = True):
 
@@ -150,10 +161,11 @@ def load_scatterer(filename):
     
     return s, x
 
-def interpolation(nE):
-    values = np.loadtxt('n_scatterer_1D/results/eigen_values.txt')
-    n = int(len(values)/nE)
-    values = np.array(values).reshape(nE, n)
+def interpolation(nE, n= None, values = None, energies = None):
+    if values is None:
+        values = np.loadtxt('n_scatterer_1D/results/eigen_values.txt')
+        n = int(len(values)/nE)
+        values = np.array(values).reshape(nE, n)
     sign = []
 
     for i in range(n): 
@@ -162,7 +174,8 @@ def interpolation(nE):
         if(np.sign(v_max*v_min)==-1): sign.append(i)
 
     print(sign)
-    energies = np.loadtxt('n_scatterer_1D/results/energies.txt')
+    if energies is None:
+        energies = np.loadtxt('n_scatterer_1D/results/energies.txt')
 
 
     for index in sign:

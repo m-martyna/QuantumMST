@@ -31,8 +31,8 @@ tab_x = [xA, xA+RAB]
 # s, tab_x = load_scatterer('n_scatterer_1D/results/random_scatterer_5.txt')
 
 
-#! calculate and plot potential, eigenvalues, and determinant
-nE = 50
+#! calculate and plot potential, eigenvalues and determinant
+nE = 10
 V = potential(scatterers=s, positions=tab_x)
 eigen_val(s, tab_x, e1 = -5.5, e2 = -2.5, n = nE,
            plot_det = False, plot_values = True)
@@ -40,10 +40,9 @@ eigen_val(s, tab_x, e1 = -5.5, e2 = -2.5, n = nE,
 #! interpolate eigenvalues to reduce computational cost
 interpolation(nE)
 
-
 #! estimate computational complexity
 # array_time = []
-# array_n = range(2, 100) #* range of the number of scatterers
+# array_n = range(1000, 1501) #* range of the number of scatterers
 # E = 3.5
 # for n in array_n:
 #     print(n)
@@ -68,3 +67,4 @@ interpolation(nE)
 # plt.ylabel("time[s]")
 
 # plt.show()
+
