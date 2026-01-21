@@ -67,7 +67,7 @@ def secular(scatterers, struct_const, only_eigen_val = False):
     
     return np.real(np.linalg.det(secular_matrix)), np.real(np.linalg.eigvals(secular_matrix))
 
-def secular_matrix(scatterers, struct_const):
+def secular_matrix(scatterers, struct_const, save = True):
     n = len(scatterers)
     secular_matrix = -struct_const.matrix_g()
     E = struct_const.E
@@ -76,7 +76,7 @@ def secular_matrix(scatterers, struct_const):
         secular_matrix[i, i] = scatterers[i].calc_m(E)
 
     secular_matrix = secular_matrix.transpose(0, 2, 1, 3).reshape(2*n, 2*n)
-    np.savetxt('n_scatterer_1D/results/secular_matrix.txt', secular_matrix.view(float), delimiter='\t', fmt='%.6f')
+    if(save): np.savetxt('n_scatterer_1D/results/secular_matrix.txt', secular_matrix.view(float), delimiter='\t', fmt='%.6f')
     return secular_matrix
 
 def eigen_val(s, tab_x, e1, e2, n, plot_det = True, plot_values = True, save = True):
