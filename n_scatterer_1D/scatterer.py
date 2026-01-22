@@ -40,7 +40,6 @@ def h_1d(l, z):
 def h_prime_1d(l, z):
     return (-np.sin(z) + 1j * np.cos(z)) if l == 0 else (np.cos(z) + 1j * np.sin(z))
 
-
 class scatterer:
     def __init__(self, r, V):
         self.r = r

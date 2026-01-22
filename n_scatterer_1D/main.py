@@ -22,10 +22,10 @@ s3 = scatterer(rB, VB)
 s = [s1, s2]
 tab_x = [xA, xA+RAB]
 
-s, tab_x = generate_scatterer(number=5, min_dist_pot = 0.5,
-                               rmin=0.5,  rmax=1.9,
-                                Vmin=-2, Vmax=-5,
-                                xmin=-10, xmax=10, save = True)
+# s, tab_x = generate_scatterer(number=5, min_dist_pot = 0.5,
+#                                rmin=0.5,  rmax=1.9,
+#                                 Vmin=-2, Vmax=-5,
+#                                 xmin=-10, xmax=10, save = True)
 
 # s, tab_x = load_scatterer('n_scatterer_1D/results/ex.txt')
 # s, tab_x = load_scatterer('n_scatterer_1D/results/random_scatterer_5.txt')
