@@ -1,1 +1,0 @@
-    # matrix = (matrix + matrix.conj().T) / 2
