@@ -1,7 +1,7 @@
 n_scatterer_1D/__pycache__
 qc.py
 n_scatterer_1D/tempCodeRunnerFile.py
-plots
-old_versions
-n_scatterer_1D
+plots/
+old_versions/
+n_scatterer_1D/
 MST/scatterer.py
