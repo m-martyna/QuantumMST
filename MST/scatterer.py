@@ -1,6 +1,22 @@
+"""
+Complete calculations for an individual scatterer based on the Butler's article (https://doi.org/10.1103/PhysRevB.42.1518).
+
+"""
+
 import numpy as np
 
+
 def calc_R(E, V, r, l, analitical = True):
+    """
+    Provides the analytical radial component of the wavefunction.
+.
+    Args:
+        E: Energy level,
+        V: well depth,
+        r: radial vector,
+        l: angular momentum quantum number,
+        analitical: analytical solution.
+    """
     if(analitical):
         if(E>V):
             k = np.sqrt(E-V)
@@ -15,6 +31,15 @@ def calc_R(E, V, r, l, analitical = True):
 
 
 def calc_Rderivative(E, V, r, l, analitical = True):
+    """
+    Docstring for calc_Rderivative
+    
+    :param E: Description
+    :param V: Description
+    :param r: Description
+    :param l: Description
+    :param analitical: Description
+    """
     if(analitical):
         if(E>V):
             k = np.sqrt(E-V)
@@ -41,6 +66,9 @@ def h_prime_1d(l, z):
     return (-np.sin(z) + 1j * np.cos(z)) if l == 0 else (np.cos(z) + 1j * np.sin(z))
 
 class scatterer:
+    """
+    Docstring for scatterer
+    """
     def __init__(self, r, V):
         self.r = r
         self.V = V

@@ -8,15 +8,16 @@ import numpy as np
 class G_AB:
     def __init__(self, energy, positions):
         """
-        Args:
-            energy: the energy value for which the matrix is constructed,
-            postions: An array containing the x-coordinates for the centers of each scatterer
+        :param energy: the energy value for which the matrix is constructed,
+        :param positions: An array containing the x-coordinates for the centers of each scatterer
 
         """
+
         self.E = energy
         self.pos = positions
 
     def calc_g(self, xA, xB):
+        
         """
         Args: 
             xA: first scatterer x-coordinate,
