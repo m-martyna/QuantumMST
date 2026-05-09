@@ -19,7 +19,7 @@ The core of calculations is based on W. H. Butler’s article
 
 The scattering problem for a 1D system with disjoint, symmetric potentials is equivalent to solving the secular matrix eigenvalue problem. If a given energy results in a zero determinant for the system, it is considered an allowed energy level. This matrix is constructed using a list of **`scatterer`** objects initialized with the dimensions of each well, an array of the center positions of scatterers and a chosen energy.  
 
-To verify the implementation, the analytical results from the article were compared with the numerical solutions. The plotted potential, the determinant for various energy values, as well as the eigenvalues are plotted below.
+To verify the implementation of the matrix, the analytical results from the article were compared with numerical results obtained using the NumPy library. The potential (a), the determinant  (b) as well as the eigenvalues (c) for various energy values are plotted below.
 
 <table>
   <tr>
@@ -34,10 +34,16 @@ To verify the implementation, the analytical results from the article were compa
   </tr>
 </table>
 
+The wave functions plotted for the determined energies (a)(b) perfectly match those provided in the article (c)(d).
+
 <table>
   <tr>
-  <td><img src="https://github.com/m-martyna/QuantumMST/blob/main/results/images/Butler/Psi1.png" width="400" height="400" /></td>
-  <td><img src="https://github.com/m-martyna/QuantumMST/blob/main/results/images/Butler/Psi2.png" width="400" height="400" /></td>
+  <td><img src="https://github.com/m-martyna/QuantumMST/blob/main/results/images/Butler/Psi1.png" width="300" height="300" /></td>
+  <td><img src="https://github.com/m-martyna/QuantumMST/blob/main/results/images/Butler/Psi2.png" width="300" height="300" /></td>
+  </tr>
+  <tr>
+  <td><img src="https://github.com/m-martyna/QuantumMST/blob/main/results/images/Butler/Psi1_Butler.png" width="300" height="300" /></td>
+  <td><img src="https://github.com/m-martyna/QuantumMST/blob/main/results/images/Butler/Psi2_Butler.png" width="300" height="300" /></td>
   </tr>
   <tr>
     <td align="center">(a)</td>
