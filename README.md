@@ -63,7 +63,7 @@ The wave functions plotted for the determined energies (c)(d) perfectly match th
 A size of secular matrix (2n x 2n) is determined by a number of scatteres (n) that creates a system. The computational time for complex systems scales poorly as the number of objects increases.
 <table>
   <tr>
-  <td><img src="https://github.com/m-martyna/QuantumMST/blob/main/results/images/Butler/complexity.png" width="500" height="300" /></td>
+  <td><img src="https://github.com/m-martyna/QuantumMST/blob/main/results/images/complexity.png" width="500" height="300" /></td>
   </tr>
 <table>
 To improve efficiency rather than computing determinants, it is possible to find several eigenvalues and use interpolation to identify where they cross the zero. This problem description immediately brings to mind the Variational Quantum Eigensolver (VQE), one of the quantum algorithms designed to solve challenging eigenvalue problems.   
