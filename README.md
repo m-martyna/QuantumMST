@@ -1,41 +1,43 @@
-# **Application of quantum computing to electronic structure calculation using Green’s function method.**
+# **Quantum computing in MST**
 
-This project aims to explore multiple scattering theory and its potential applications within the field of quantum computing.
+This project aims to explore multiple scattering theory and its potential applications within the field of quantum computing. This research was conducted as part of my Master’s degree titled **_Application of quantum computing to electronic structure calculation using Green’s function method_**, which provides more complex analysis of the topics covered in this repository.
 
+## Requirements
+The code was developed and tested using the following versions of:
+* **Python:** `3.12.2`
+* **Qiskit:** `2.2.3`
 
-## Table of contents
-* [Butler’s approach to MST](#butler)
-* [Validation of results from article](#validation)
+### Installation
+Ensure you have Python installed ([python.org](https://www.python.org/)). The required quantum computing framework can be set up via `pip`:
+```bash
+pip install qiskit==2.2.3
+```
+## Overview
+The core of calculations is based on W. H. Butler’s article
+> **_Validity and accuracy of multiple-scattering theory_**  
+> https://doi.org/10.1103/PhysRevB.41.2684.   
 
+The scattering problem for a 1D system with disjoint, symmetric potentials is equivalent to solving the secular matrix eigenvalue problem. If a given energy results in a zero determinant for the system, it is considered an allowed energy level. This matrix is constructed using a list of **`scatterer`** objects initialized with the dimensions of each well, an array of the center positions of scatterers and a chosen energy.  
 
-
-## Butler’s Approach to MST
-The core of calculations is based on W. H. Butler’s article _Validity and accuracy of multiple-scattering theory_ (https://doi.org/10.1103/PhysRevB.42.1518). The primary objective is to determine the solution to the wave equation for a muffin-tin potential. This potenitial in one dimension is a sum of symmetric, disjoint potentials
-
-$$V(x) = \sum_{n} v_n(x - X_n).$$
-
-There are two distinct regions (I and II) with non-vanishing and zero potential. The wave functions in these regions are given by
-
-$$\Psi_{In} = \sum_{l=0,1} c_l^n R_l^n(r_n) Y_l(\hat{r}_n),$$
-
-$$\Psi_{II} = \sum_{n=A,B} \sum_{l=0,1} b_l^n h_l(E^{1/2} r_n) Y_l(\hat{r}_n).$$
+To verify the implementation, the analytical results from the article were compared with the numerical solutions. The plotted potential, the determinant for various energy values, as well as the eigenvalues are plotted below.
 
 <table>
   <tr>
-  <td><img src="https://github.com/m-martyna/Praca_magisterska/blob/main/examples/plots/scatters_illustration.png" width="400" height="400" /></td>
+  <td><img src="https://github.com/m-martyna/QuantumMST/blob/main/results/images/Butler/potential.png" width="300" height="300" /></td>
+  <td><img src="https://github.com/m-martyna/QuantumMST/blob/main/results/images/Butler/determinant.png" width="300" height="300" /></td>
+  <td><img src="https://github.com/m-martyna/QuantumMST/blob/main/results/images/Butler/eigen_values.png" width="300" height="300" /></td>
   </tr>
   <tr>
-    <td align="center"></td>
+    <td align="center">(a)</td>
+    <td align="center">(b)</td>
+    <td align="center">(c)</td>
   </tr>
 </table>
 
-## Validation of results from article
-As an initial benchmark I applied the theory to a one-dimensional two-scatterer problem following the approach described in Butler’s article (https://doi.org/10.1103/PhysRevB.42.1518).
-
 <table>
   <tr>
-  <td><img src="https://github.com/m-martyna/Praca_magisterska/blob/main/examples/plots/Psi1.png" width="400" height="400" /></td>
-  <td><img src="https://github.com/m-martyna/Praca_magisterska/blob/main/examples/plots/Psi2.png" width="400" height="400" /></td>
+  <td><img src="https://github.com/m-martyna/QuantumMST/blob/main/results/images/Butler/Psi1.png" width="400" height="400" /></td>
+  <td><img src="https://github.com/m-martyna/QuantumMST/blob/main/results/images/Butler/Psi2.png" width="400" height="400" /></td>
   </tr>
   <tr>
     <td align="center">(a)</td>
@@ -43,4 +45,14 @@ As an initial benchmark I applied the theory to a one-dimensional two-scatterer 
   </tr>
 </table>
 
-/home/ugi/Praca_magisterska/examples/plots/Psi1.png
+
+
+
+## Contact & attribution
+**Author:** Martyna Migdałek    
+**Supervised by**:  
+* **Tomasz Stopa, PhD**
+* **Jakub Haberko, PhD**  
+
+**Institution:** AGH University of Krakow, Faculty of Physics and Applied Computer Science  
+**Email:** migdalekm@student.agh.edu.pl
