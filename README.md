@@ -5,12 +5,12 @@ This project aims to explore multiple scattering theory and its potential applic
 ## Requirements
 The code was developed and tested using the following versions of:
 * **Python:** `3.12.2`
-* **Qiskit:** `2.2.3`
+* **Qiskit:** `2.4.1`
 
 ### Installation
 Ensure you have Python installed ([python.org](https://www.python.org/)). The required quantum computing framework can be set up via `pip`:
 ```bash
-pip install qiskit==2.2.3
+pip install qiskit==2.4.1
 ```
 ## Overview
 ### Multiple scattering theory
@@ -69,8 +69,8 @@ A size of secular matrix (2n x 2n) is determined by a number of scatteres (n) th
 To improve efficiency rather than computing determinants, it is possible to find several eigenvalues and use interpolation to identify where they cross the zero. This problem description immediately brings to mind the Variational Quantum Eigensolver (VQE), one of the quantum algorithms designed to solve challenging eigenvalue problems.   
 There is a few issues with using it. Firstly, most quantum algorithms are designed for Hermitian matrices, whereas the matrix representing this problem is complex symmetric. Even if we meet this requirement, VQE can only find the ground state eigenvalue. To ensure we are not missing any allowed energies, we need to calculate all of them.
    
-This study two approaches are explored:  
-* using VQD algorithm that allows caluclating higher eigen values,
+In this study two approaches are explored:  
+* using VQD algorithm, which allows caluclating higher eigen values,
 * creating custom algorithm that employs energy as one of paramters in the cost function.
 
 ## Contact & attribution
