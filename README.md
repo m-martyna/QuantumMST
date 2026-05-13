@@ -24,9 +24,9 @@ To verify the implementation of the matrix, the analytical results from the arti
 
 <table>
   <tr>
-  <td><img src="https://github.com/m-martyna/QuantumMST/blob/main/results/images/Butler/potential.png" width="300" height="300" /></td>
-  <td><img src="https://github.com/m-martyna/QuantumMST/blob/main/results/images/Butler/determinant.png" width="300" height="300" /></td>
-  <td><img src="https://github.com/m-martyna/QuantumMST/blob/main/results/images/Butler/eigen_values.png" width="300" height="300" /></td>
+  <td><img src="https://github.com/m-martyna/QuantumMST/blob/main/results/images/readme/Butler/potential.png" width="300" height="300" /></td>
+  <td><img src="https://github.com/m-martyna/QuantumMST/blob/main/results/images/readme/Butler/determinant.png" width="300" height="300" /></td>
+  <td><img src="https://github.com/m-martyna/QuantumMST/blob/main/results/images/readme/Butler/eigen_values.png" width="300" height="300" /></td>
   </tr>
   <tr>
     <td align="center">(a)</td>
@@ -39,16 +39,16 @@ The wave functions plotted for the determined energies (c)(d) perfectly match th
 
 <table>
   <tr>
-  <td><img src="https://github.com/m-martyna/QuantumMST/blob/main/results/images/Butler/Psi1_Butler.png" width="300" height="300" /></td>
-  <td><img src="https://github.com/m-martyna/QuantumMST/blob/main/results/images/Butler/Psi2_Butler.png" width="300" height="300" /></td>
+  <td><img src="https://github.com/m-martyna/QuantumMST/blob/main/results/images/readme/Butler/Psi1_Butler.png" width="300" height="300" /></td>
+  <td><img src="https://github.com/m-martyna/QuantumMST/blob/main/results/images/readme/Butler/Psi2_Butler.png" width="300" height="300" /></td>
   </tr>
     <tr>
     <td align="center">(a)</td>
     <td align="center">(b)</td>
   </tr>
   <tr>
-  <td><img src="https://github.com/m-martyna/QuantumMST/blob/main/results/images/Butler/Psi1.png" width="300" height="300" /></td>
-  <td><img src="https://github.com/m-martyna/QuantumMST/blob/main/results/images/Butler/Psi2.png" width="300" height="300" /></td>
+  <td><img src="https://github.com/m-martyna/QuantumMST/blob/main/results/images/readme/Butler/Psi1.png" width="300" height="300" /></td>
+  <td><img src="https://github.com/m-martyna/QuantumMST/blob/main/results/images/readme/Butler/Psi2.png" width="300" height="300" /></td>
   </tr>
 
   <tr>
@@ -63,7 +63,7 @@ The wave functions plotted for the determined energies (c)(d) perfectly match th
 A size of secular matrix (2n x 2n) is determined by a number of scatteres (n) that creates a system. The computational time for complex systems scales poorly as the number of objects increases.
 <table>
   <tr>
-  <td><img src="https://github.com/m-martyna/QuantumMST/blob/main/results/images/complexity.png" width="500" height="300" /></td>
+  <td><img src="https://github.com/m-martyna/QuantumMST/blob/main/results/images/readme/complexity.png" width="500" height="300" /></td>
   </tr>
 <table>
 To improve efficiency rather than computing determinants, it is possible to find several eigenvalues and use interpolation to identify where they cross the zero. This problem description immediately brings to mind the Variational Quantum Eigensolver (VQE), one of the quantum algorithms designed to solve challenging eigenvalue problems.   
