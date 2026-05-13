@@ -1,2 +1,4 @@
-n_scatterer_1D/__pycache__
-n_scatterer_1D/tempCodeRunnerFile.py
+old_versions/
+__pycache__/*
+QuantumMST/pycache__/*
+ex1.py
