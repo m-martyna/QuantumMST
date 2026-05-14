@@ -8,10 +8,11 @@ The code was developed and tested using the following versions of:
 * **Qiskit:** `2.4.1`
 
 ### Installation
-Ensure you have Python installed ([python.org](https://www.python.org/)). The required quantum computing framework can be set up via `pip`:
+This library can be installed directly via `pip`:
 ```bash
-pip install qiskit==2.4.1
+pip install qmst
 ```
+
 ## Overview
 ### Multiple scattering theory
 The core of calculations is based on W. H. Butler’s article

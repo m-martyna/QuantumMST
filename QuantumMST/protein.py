@@ -42,7 +42,7 @@ class protein_structure:
         r_min = scatterers[i_min].r
 
 
-        dx = 1.0
+        dx = 2.0 # additinal space
         x_beg = positions[i_min]-r_min-dx
         x_end = positions[i_max]+r_max+dx
         array_x = np.linspace(x_beg, x_end, len(scatterers)*resolution)

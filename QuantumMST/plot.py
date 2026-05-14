@@ -24,13 +24,14 @@ def plot_wavefunction(array_x, V, structure: protein_structure):
         integral = scipy.integrate.simpson((np.abs(psi)**2), x = array_x)
         norm_psi = psi/np.sqrt(integral)
 
-        a = np.max(norm_psi)*1.1
-
+        a = np.max(np.abs(norm_psi))*1.1
+        print(f"a = {a}")
+        V = np.array(V)
         plt.plot(array_x, norm_psi, color='black')
         plt.axhline(0, ls='--', color='black')
         plt.fill_between(array_x, -a, a, where=V<0, color='red', alpha=0.1)
         plt.ylim(-a, a)
-        # plt.title(f"E = {structure.energy}")
+        plt.title(f"E = {structure.energy:4f}")
         plt.xlabel("x")
         plt.ylabel(f"$\Psi$")
         plt.show()

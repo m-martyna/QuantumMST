@@ -5,8 +5,6 @@ import numpy as np
 
 def calc_psi_components(structure: protein_structure):
     data = {}
-
-    print(type(structure))
     E = structure.energy
     data['E'] = E
     scatterers = structure.scatterers
