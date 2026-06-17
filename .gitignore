@@ -1,4 +1,3 @@
-old_versions/
+.old/
 __pycache__/*
 QuantumMST/pycache__/*
-ex1.py

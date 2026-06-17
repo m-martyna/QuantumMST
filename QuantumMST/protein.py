@@ -5,11 +5,11 @@ from .struct_const import G_AB
 
 class protein_structure:
     def __init__(self, energy, scatterers = None, positions = None, reference_system = None):
-
+        
         self.energy = energy
 
         if reference_system is not None:
-            scatterers, positions = example_protein_structure(reference_system)
+            scatterers, positions = example_potentials(reference_system)
             self.scatterers = scatterers
             self.positions = positions
             self.struct_const = G_AB(energy, positions)
@@ -68,7 +68,7 @@ class protein_structure:
 
         return V, array_x
     
-def example_protein_structure(number):
+def example_potentials(number):
 
     if number == 1:
         rA, VA, xA = 0.8, -5, -1
@@ -79,6 +79,49 @@ def example_protein_structure(number):
 
         scatterers=[s1, s2]
         positions=[xA, xA+RAB]
+
+    elif number == 2:
+        half_valley = [-2.0, -4.0, -6.0, -8.0, -10.0, -10.0, -8.0, -6.0, -4.0, -2.0]
+        all_V = half_valley + half_valley
+        all_r = [0.15] * len(all_V)
+        
+        scatterers = []
+        positions = []
+        current_x = -9.0
+        
+        for r_val, V_val in zip(all_r, all_V):
+            scatterers.append(scatterer(r=r_val, V=V_val))
+            positions.append(current_x)
+            current_x += 0.9
+
+    elif number == 3:
+        side_depths = [-1.0, -2.0, -3.0, -4.0, -5.0, -6.0, -7.0, -8.0, -9.0, -9.5]
+        all_V = side_depths + [-10.0] + side_depths[::-1]
+        all_r = [0.15] * len(all_V)
+        
+        scatterers = []
+        positions = []
+        current_x = -9.5
+        
+        for r_val, V_val in zip(all_r, all_V):
+            scatterers.append(scatterer(r=r_val, V=V_val))
+            positions.append(current_x)
+            current_x += 0.9
+
+    elif number == 4:
+        one_quarter = [-3.0, -6.0, -9.0, -6.0, -3.0, -1.0]
+        half_profile = one_quarter + one_quarter[::-1]
+        all_V = half_profile + half_profile[::-1]
+        all_r = [0.12] * len(all_V)
+        
+        scatterers = []
+        positions = []
+        current_x = -10.0
+        
+        for r_val, V_val in zip(all_r, all_V):
+            scatterers.append(scatterer(r=r_val, V=V_val))
+            positions.append(current_x)
+            current_x += 0.8
     else:
         raise ValueError("Example number not recognized. Please choose a valid example number.")
     
