@@ -29,10 +29,19 @@ def Numpy_energies(energies, arr_s, arr_x):
         matrix = structure.secular_matrix()
 
         eigen_values = np.sort(NumpySolver(matrix))
-
         results.append(eigen_values)
     
     return np.array(results).T
+
+def determinant(energies, arr_s, arr_x):
+    results = []
+    for e in energies:
+        structure = protein_structure(e, scatterers=arr_s, positions=arr_x)
+        matrix = structure.secular_matrix()
+        results.append(np.real(np.linalg.det(matrix)))
+        
+    
+    return results
 
 # def VQDSolver(backend, k, energies, scatterers, positions, b = 1.5):
 #     nE = len(energies)

@@ -192,8 +192,8 @@ def interpolation(nE, values = None, energies = None):
             sign_current = values[i, index]
             if(np.sign(sign_prev*sign_current)==-1):
                 # print(f'{energies[i-1]:.4f} : {energies[i]:.4f}')
-                start = i-1
-                stop = i
+                start0 = i-1
+                stop0 = i
                 x = []
                 y = []
                 for j in range(i-2, i+2):
@@ -211,7 +211,7 @@ def interpolation(nE, values = None, energies = None):
 
         wiersz = {
             'Eigenvalue number': f"{sign[index]}",
-            'In between the points': f'{energies[i-1]:.4f} : {energies[i]:.4f}', 
+            'In between the points': f'{energies[start0]:.6f} : {energies[stop0]:.6f}', 
             'Interpolated value': result.real[0]      
         }
             
