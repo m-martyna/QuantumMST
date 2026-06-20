@@ -88,7 +88,7 @@ def plot_wavefunction(array_x, V, structure: protein_structure):
         plt.axhline(0, ls='--', color='black')
         plt.fill_between(array_x, -a, a, where=V<0, color='red', alpha=0.1, hatch="//")
         plt.ylim(-a, a)
-        plt.title(f"Wavefunction for energy{structure.energy:4f} Ry \nfor two-scatterer system", fontdict=title_font)
+        plt.title(f"Wavefunction for energy {structure.energy:4f} Ry \nfor two-scatterer system", fontdict=title_font)
         plt.xlabel("x[$a_0$]", fontdict=axis_font)
         plt.ylabel(r"$\Psi$", fontdict=axis_font)
         plt.show()
