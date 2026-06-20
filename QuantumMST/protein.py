@@ -122,6 +122,45 @@ def example_potentials(number):
             scatterers.append(scatterer(r=r_val, V=V_val))
             positions.append(current_x)
             current_x += 0.8
+    elif number == 5:
+        all_V = [-1.2, -1.8, -3.5, -3.8, -5.5, -5.2, -7.4, -7.8, -9.3, -8.9, 
+                 -10.0, 
+                 -9.4, -8.7, -8.1, -6.8, -5.9, -5.1, -3.6, -2.8, -2.1, -0.9]
+        
+        all_r = [0.16, 0.25, 0.15, 0.19, 0.15, 0.22, 0.16, 0.17, 0.24, 0.15, 
+                 0.23, 
+                 0.15, 0.20, 0.16, 0.18, 0.15, 0.26, 0.16, 0.21, 0.16, 0.15]
+        
+        all_steps = [1.25, 0.85, 1.40, 0.95, 1.10, 0.75, 1.30, 0.90, 1.05, 1.50,
+                     0.80, 1.20, 0.70, 1.35, 0.95, 1.15, 0.85, 1.45, 1.00, 1.10]
+        
+        scatterers = []
+        positions = []
+        current_x = -11.5
+        
+        for i, (r_val, V_val) in enumerate(zip(all_r, all_V)):
+            scatterers.append(scatterer(r=r_val, V=V_val))
+            positions.append(current_x)
+            
+            if i < len(all_steps):
+                current_x += all_steps[i]
+
+    elif number == 6:
+        all_V = [-5.0] * 10
+        all_r = [1.5] * 10
+        all_steps = [4.5] * 9
+        
+        scatterers = []
+        positions = []
+        current_x = -20.25
+        
+        for i, (r_val, V_val) in enumerate(zip(all_r, all_V)):
+            scatterers.append(scatterer(r=r_val, V=V_val))
+            positions.append(current_x)
+            
+            if i < len(all_steps):
+                current_x += all_steps[i]
+                
     else:
         raise ValueError("Example number not recognized. Please choose a valid example number.")
     
