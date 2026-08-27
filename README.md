@@ -77,7 +77,6 @@ To verify the implementation of the matrix, the analytical results from the arti
 
 </table>
 
-/
 ### Quantum computing
 A size of secular matrix (2n x 2n) is determined by a number of scatteres (n) that creates a system. The computational time for complex systems scales poorly as the number of objects increases.
 
