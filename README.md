@@ -1,8 +1,9 @@
-# **Quantum computing in MST**
+# __Quantum computing in Multiple Scattering Theory (MST)__
 
 This project aims to explore multiple scattering theory and its potential applications within the field of quantum computing. This research was conducted as part of my Master’s degree titled **_Application of quantum computing to electronic structure calculation using Green’s function method_**, which provides more complex analysis of the topics covered in this repository.
 
-## Requirements
+## Getting Started
+### Requirements
 The code was developed and tested using the following versions of:
 * **Python:** `3.12.2`
 * **Qiskit:** `2.4.1`
@@ -14,6 +15,30 @@ pip install qmst
 ```
 
 ## Overview
+
+### Repository Structure
+
+```text
+├── QuantumMST/
+│   ├── __init__.py          # Package initialization
+│   ├── functions.py         # Helper mathematical and interpolation functions
+│   ├── matrix_solvers.py    # Secular matrix solvers (MST and numerical methods)
+│   ├── plot.py              # Visualization routines
+│   ├── protein.py           # Protein structure and system definitions
+│   ├── scatterer.py         # Definitions and building routines for single scatterer data
+│   ├── struct_const.py      # Structural constants computation
+│   ├── vqd.py               # Functions required to run the VQD (Variational Quantum Deflation) algorithm
+│   └── wavefunction.py      # Wavefunction calculation and construction
+│
+├── 1_Introduction_MST.ipynb # Example usage: introduction to MST
+├── 2_Solvers.ipynb          # Example usage: energy calculation
+└── 3_Wavefunction.ipynb     # Example usage: wavefunction plotting
+```
+
+
+* **`QuantumMST/`** – Core Python package containing all classes, functions, and utilities required for calculations, quantum algorithms and visualization.
+* **`1_Introduction_MST.ipynb`, `2_Solvers.ipynb`, `3_Wavefunction.ipynb`** – Jupyter notebooks demonstrating step-by-step example usage of the library.
+
 ### Multiple scattering theory
 The core of calculations is based on W. H. Butler’s article
 > **_Validity and accuracy of multiple-scattering theory_**  
@@ -25,9 +50,9 @@ To verify the implementation of the matrix, the analytical results from the arti
 
 <table>
   <tr>
-  <td><img src="https://github.com/m-martyna/QuantumMST/blob/main/results/images/readme/Butler/potential.png" width="300" height="300" /></td>
-  <td><img src="https://github.com/m-martyna/QuantumMST/blob/main/results/images/readme/Butler/determinant.png" width="300" height="300" /></td>
-  <td><img src="https://github.com/m-martyna/QuantumMST/blob/main/results/images/readme/Butler/eigen_values.png" width="300" height="300" /></td>
+  <td><img src="https://github.com/m-martyna/QuantumMST/blob/main/.thesis_images/systems/protein.png" width="300" height="300" /></td>
+  <td><img src="https://github.com/m-martyna/QuantumMST/blob/main/.thesis_images/determinants/d21.png" width="300" height="300" /></td>
+  <td><img src="https://github.com/m-martyna/QuantumMST/blob/main/.thesis_images/eigenvalues/ev_21_a.png" width="300" height="300" /></td>
   </tr>
   <tr>
     <td align="center">(a)</td>
@@ -81,4 +106,4 @@ In this study two approaches are explored:
 * **Jakub Haberko, PhD**  
 
 **Institution:** AGH University of Krakow, Faculty of Physics and Applied Computer Science  
-**Email:** migdalekm@student.agh.edu.pl
+**Email:** migdalekm02@gmail.com
