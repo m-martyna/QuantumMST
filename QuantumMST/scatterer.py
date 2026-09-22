@@ -1,3 +1,9 @@
+"""
+Defines single 1D scatterer properties,
+wavesolutions, logarithmic derivatives (gamma),
+and scattering matrix elements (m_l).
+"""
+
 import numpy as np
 
 def calc_R(E, V, r, l):

@@ -1,10 +1,14 @@
+"""
+Core module for solving and evaluating the 1D quantum wave function (Psi) 
+within a multiple-scattering formalism.
+
+"""
 from .protein import protein_structure
 from .scatterer import scatterer
 import numpy as np
 import scipy.linalg as la
 import scipy.integrate
 import matplotlib.pyplot as plt
-
 
 def j_1d(l, z):
     return np.cos(z) if l == 0 else np.sin(z)

@@ -21,7 +21,7 @@ pip install qmst
 ```text
 ├── QuantumMST/
 │   ├── __init__.py          # Package initialization
-│   ├── functions.py         # Helper mathematical and interpolation functions
+│   ├── potential.py         # Calculating potential profile
 │   ├── matrix_solvers.py    # Secular matrix solvers (MST and numerical methods)
 │   ├── plot.py              # Visualization routines
 │   ├── protein.py           # Protein structure and system definitions

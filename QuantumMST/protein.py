@@ -1,3 +1,10 @@
+"""
+Manages multi-scatterer systems (protein structures),
+calculates the secular matrix and potential profiles,
+and provides synthetic/periodic potential generators.
+"""
+
+
 import numpy as np
 import os
 import random

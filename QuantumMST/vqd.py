@@ -1,20 +1,10 @@
+"""
+Utility module for mapping secular scattering matrices into quantum operator 
+representations (Pauli strings) and evaluating expectation values via an Estimator.
+
+"""
 import numpy as np
-import matplotlib.pyplot as plt
-from qiskit import generate_preset_pass_manager
-from matplotlib.lines import Line2D
-
-from QuantumMST import scatterer
-from QuantumMST import protein_structure
-
-
-from qiskit.quantum_info import Operator, Pauli, SparsePauliOp
-from qiskit_algorithms.optimizers import COBYLA, SLSQP
-from qiskit.circuit.library import efficient_su2
-from qiskit_algorithms import VQD, NumPyEigensolver
-from qiskit.primitives import StatevectorEstimator, StatevectorSampler
-from qiskit_algorithms.state_fidelities import ComputeUncompute
-from qiskit_aer import AerSimulator
-from qiskit_ibm_runtime import QiskitRuntimeService, Session, Estimator, Sampler
+from qiskit.quantum_info import Pauli, SparsePauliOp
 
 def decimal_to_base_4(number):
 

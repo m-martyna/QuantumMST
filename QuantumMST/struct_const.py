@@ -1,3 +1,10 @@
+
+"""
+Calculates structural constants (structure constants)
+and Green's function propagator (G_AB)
+for 1D multiple-scattering theory.
+"""
+
 import numpy as np
 
 class G_AB:

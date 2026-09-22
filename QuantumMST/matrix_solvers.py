@@ -1,10 +1,16 @@
+"""
+Solvers and eigenvalue interpolation tools for finding bound states,
+including classical numerical solvers (NumPy, FDM)
+and quantum variational algorithms (VQD).
+"""
+
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 from scipy import linalg
 from scipy.sparse.linalg import eigs
 from typing import Literal
-
+from qiskit_aer import AerSimulator
 
 from .protein import protein_structure
 from .scatterer import scatterer
@@ -25,7 +31,7 @@ title_font = {
 
 axis_font = {
         'fontname': 'STIXGeneral',
-        'size': 13,  
+        'size': 20,  
 }
 
 
@@ -56,7 +62,7 @@ def interpolation(nE, values=None, energies=None, display_stats=False, plot=Fals
         cmap = plt.cm.coolwarm
         num_lines = len(sign)
         colors = [cmap(i) for i in np.linspace(0, 1, num_lines)]
-        plt.ylabel('Eigenvalue[Ry]',fontdict = axis_font)
+        plt.ylabel('Eigenvalue',fontdict = axis_font)
         plt.xlabel('Energy[Ry]',fontdict = axis_font)
         norm = plt.Normalize(vmin=1, vmax=num_lines)
         sm = plt.cm.ScalarMappable(cmap=cmap, norm=norm)
@@ -69,7 +75,7 @@ def interpolation(nE, values=None, energies=None, display_stats=False, plot=Fals
     c = 0
     for index in sign:
         if plot:
-            plt.plot(energies, values[:, index], "o-", markersize=2, color=colors[c])
+            plt.plot(energies, values[:, index], "o-", markersize=3, color=colors[c])
         c+=1
         sign_prev = values[0, index]
         for i in range(1, nE):
@@ -118,15 +124,66 @@ def interpolation(nE, values=None, energies=None, display_stats=False, plot=Fals
 
     return wyniki
 
-def Solvers(structure: protein_structure, mode , nE = 20, display_stats = False, plot = False):
+def Solvers(structure: protein_structure, mode , nE = 20, display_stats = False, plot = False, real = True, imaginary = False, backend = None, b = None, k = None):
     if mode == 'numpy':
-        return NumpySolver(structure, nE, display_stats=display_stats, plot=plot)
+        return NumpySolver(structure, nE, display_stats=display_stats, plot=plot, real=real, imaginary=imaginary)
     elif mode == 'vqd':
-        pass
+        return VQDSolver(structure, nE, backend, k, b, display_stats=display_stats, plot=plot)
+    elif mode == 'new':
+        return NewSolver(structure)
     else:
         raise ValueError("Invalid mode. Choose either 'numpy' or 'vqd'.")
 
-def NumpySolver(structure: protein_structure, nE, display_stats = False, plot = False):
+
+def VQDSolver(
+    structure, nE, backend=None, k=2, b=None, display_stats=False, plot=False):
+    E_min = np.min(structure.V)
+    energies = np.linspace(E_min, -0.1, nE)
+
+    if backend is None:
+        backend = AerSimulator()
+
+    nE = len(energies)
+    last_optimal_points = None
+    arr_ev = []
+
+    with Session(backend=backend) as session:
+        for energy in energies:
+            structure.energy = energy
+            matrix = structure.secular_matrix
+
+            matrix_neg = -matrix
+            matrix_neg = check_size(matrix_neg)
+            op = convert_matrix(matrix_neg)
+
+            ansatz = efficient_su2(op.num_qubits, reps=4).decompose()
+            optimizer = COBYLA(maxiter=1000)
+
+            estimator = Estimator(mode=session)
+            sampler = Sampler(mode=session)
+            fidelity = ComputeUncompute(sampler)
+
+            vqd = VQD(
+                estimator=estimator,
+                fidelity=fidelity,
+                ansatz=ansatz,
+                optimizer=optimizer,
+                k=k,
+                betas=b,
+                initial_point=last_optimal_points,
+            )
+
+            result_vqd = vqd.compute_eigenvalues(op)
+            last_optimal_points = result_vqd.optimal_points
+
+            current_eigenvalues = -np.real(result_vqd.eigenvalues)
+            current_eigenvalues = np.sort(current_eigenvalues)
+
+            arr_ev.extend(current_eigenvalues)
+
+    return np.array(interpolation(nE, arr_ev, energies, display_stats=display_stats, plot=plot))
+
+def NumpySolver(structure: protein_structure, nE, display_stats = False, plot = False, real = True, imaginary = False):
     E_min = np.min(structure.V)
     energies = np.linspace(E_min, -0.1, nE) 
     arr_ev = []
@@ -134,29 +191,36 @@ def NumpySolver(structure: protein_structure, nE, display_stats = False, plot = 
     for E in energies:
         structure.energy = E
         matrix = structure.secular_matrix
-        eigenvalue = np.real(np.linalg.eigvals(matrix))
-        eigenvalue = np.sort(eigenvalue)
+        
+        if real and imaginary:
+            eigenvalue = np.sort(np.real(np.linalg.eigvals(matrix))) + 1j * np.sort(np.imag(np.linalg.eigvals(matrix)))
+        elif imaginary:
+            eigenvalue = np.sort(np.imag(np.linalg.eigvals(matrix)))
+        else:
+            eigenvalue = np.sort(np.real(np.linalg.eigvals(matrix)))
         arr_ev.extend(eigenvalue)
 
     return np.array(interpolation(nE, arr_ev, energies, display_stats=display_stats, plot=plot))
+
+def NewSolver(structure: protein_structure):
+    print("The algorithm has not been deployed yet while its cost function form is being finalized.")
+    pass
        
-
-
-
-def ScipySolver(matrix):
-    return np.real(linalg.eigvals(matrix))
-
-def ScipySparseSolver(matrix, k=2):
-    results, _ = np.real(eigs(matrix, k=k))
-    return results
-
-def Numpy_energies(energies, arr_s, arr_x):
+def Numpy_energies(energies, arr_s, arr_x, real = True, imaginary = False):
     results = []
     for e in energies:
         structure = protein_structure(e, scatterers=arr_s, positions=arr_x)
         matrix = structure.secular_matrix
 
         eigen_values = np.sort(np.real(np.linalg.eigvals(matrix)))
+
+        if real and imaginary:
+            eigen_values = np.sort(np.real(np.linalg.eigvals(matrix))) + 1j * np.sort(np.imag(np.linalg.eigvals(matrix)))
+        elif imaginary:
+            eigen_values = np.sort(np.imag(np.linalg.eigvals(matrix)))
+        else:
+            eigen_values = np.sort(np.real(np.linalg.eigvals(matrix)))
+
         results.append(eigen_values)
     
     return np.array(results).T
@@ -170,44 +234,6 @@ def determinant(energies, arr_s, arr_x):
         
     
     return results
-
-# def VQDSolver(backend, k, energies, scatterers, positions, b = 1.5):
-#     nE = len(energies)
-#     last_optimal_points = None
-
-#     evals = []
-#     for _ in range(k):
-#         evals.append([])
-
-#     with Session(backend=backend) as session:
-#         for energy in energies:
-#             structure = protein_structure(energy, scatterers=scatterers, positions=positions)
-#             matrix = structure.secular_matrix()
-
-#             matrix_neg = -matrix
-#             matrix_neg = check_size(matrix_neg)
-#             op = convert_matrix(matrix_neg)
-
-#             ansatz = efficient_su2(op.num_qubits, reps=4).decompose()
-#             optimizer = COBYLA(maxiter = 1000)
-            
-#             estimator = Estimator(mode=session)
-#             sampler = Sampler(mode=session)
-#             fidelity = ComputeUncompute(sampler)
-            
-#             vqd = VQD(estimator, fidelity, ansatz, optimizer, k=k, betas=[b]*k, initial_point=last_optimal_points)
-
-#             result_vqd = vqd.compute_eigenvalues(op)
-
-#             last_optimal_points = result_vqd.optimal_points
-
-#             for ki in range(k):
-#                 evals[ki].append(-result_vqd.eigenvalues[ki].real)
-#     return evals
-
-def NewSolver(matrix):
-    pass
-
 
 
 def FDM(system: protein_structure, resolution):
@@ -230,27 +256,5 @@ def FDM(system: protein_structure, resolution):
 
     for n, E in enumerate(bound_energies):
         print(f"E_{n} = {E:8.4f} Ry")
-
-    # plt.figure(figsize=(10, 6))
-    # plt.plot(x, V, 'k-', linewidth=2, label='V(x)')
-
-    # scale = 0.4
-    # for n, E in enumerate(bound_energies):
-    #     psi = bound_wavefunctions[:, n] / np.sqrt(dx)
-    #     plt.axhline(E, color='gray', linestyle=':', alpha=0.6)
-    #     plt.plot(x, E + scale * psi, label=f'$E_{{{n}}} = {E:.2f}$ Ry')
-
-    # axis_font = {
-    #                 'fontname': 'STIXGeneral',
-    #                 'size': 11,    
-    #         }
-    # plt.xlim(x[0], x[-1])
-    # plt.ylim(np.min(V) - 1.0, 1.0)
-    # plt.xlabel("x[$a_0$]", fontdict=axis_font)
-    # plt.ylabel("V[Ry]", fontdict=axis_font)
-    # plt.legend(loc='upper right', bbox_to_anchor=(1.25, 1.0))
-    # plt.grid(True, alpha=0.3)
-    # plt.tight_layout()
-    # plt.show()
 
 

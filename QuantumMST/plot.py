@@ -1,3 +1,8 @@
+"""
+Visualization module for scattering potentials
+and normalized 1D wave functions (Psi, |Psi|^2).
+"""
+
 import numpy as np
 import scipy.integrate
 import string
@@ -16,7 +21,7 @@ def get_label_letters(n):
         result.append(chr(65 + remainder))
     return "".join(reversed(result))
 
-def plot_potential(structure: protein_structure, title = None, path=None, title_size = 13, axis_size = 11):
+def plot_potential(structure: protein_structure, title = None, path=None, title_size = 17, axis_size = 17):
 
         V, array_x = structure.V, structure.array_x
 
@@ -74,18 +79,18 @@ def plot_potential(structure: protein_structure, title = None, path=None, title_
         plt.close()
 
 
-def plot_wavefunction(array_x, V, structure: protein_structure):
+def plot_wavefunction(array_x, V, structure: protein_structure, plot_modulo_squared = False):
     number_scatterers = len(structure.scatterers)
     title_font = {
         'fontname': 'STIXGeneral',
-        'size': 13,
+        'size': 17,
         'weight': 'semibold',
         'color': 'black'
     }
 
     axis_font = {
         'fontname': 'STIXGeneral',
-        'size': 13,    
+        'size': 17,    
     }
 
     psi = np.array([Psi(x, structure) for x in array_x])
@@ -98,7 +103,17 @@ def plot_wavefunction(array_x, V, structure: protein_structure):
     plt.axhline(0, ls='--', color='black')
     plt.fill_between(array_x, -a, a, where=V < 0, color='red', alpha=0.1, hatch="//")
     plt.ylim(-a, a)
-    plt.title(f"Wavefunction for energy {structure.energy:.4f} Ry \nfor {number_scatterers}-scatterer system", fontdict=title_font)
+    plt.title(f"$\Psi(x)$ for energy {structure.energy:.4f} Ry", fontdict=title_font)
     plt.xlabel("x[$a_0$]", fontdict=axis_font)
     plt.ylabel(r"$\Psi$", fontdict=axis_font)
+
+    if plot_modulo_squared:
+        plt.figure()
+        plt.plot(array_x, np.abs(norm_psi)**2, color='black')
+        plt.axhline(0, ls='--', color='black')
+        plt.fill_between(array_x, -a, a, where=V < 0, color='red', alpha=0.1, hatch="//")
+        plt.title(rf"$|\boldsymbol{{\psi(x)}}|^2$ for energy {structure.energy:.4f} Ry", fontdict=title_font)
+        plt.ylim(-a, a)
+        plt.xlabel("x[$a_0$]", fontdict=axis_font)
+        plt.ylabel(r"$|\Psi|^2$", fontdict=axis_font)
     plt.show()
