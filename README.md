@@ -11,7 +11,7 @@ The code was developed and tested using the following versions of:
 ### Installation
 This library can be installed directly via `pip`:
 ```bash
-pip install qmst
+pip install git+https://github.com/m-martyna/QuantumMST.git
 ```
 
 ## Overview
